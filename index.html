@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boxes Layout</title>
+    <style>
+        .box {
+            width: 100%;
+            margin-bottom: 0;
+        }
+        .box1 {
+            height: 100px;
+            background-color: #000000;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding-right: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        .btn {
+            margin-left: 30px;
+            color: #2EFF4F;
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        body {
+            margin: 0;
+            padding-top: 100px;
+        }
+        .back-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: #3B3838;
+            color: #2EFF4F;
+            border: 2px solid #2EFF4F;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 999;
+            font-size: 20px;
+        }
+        .scrollbar {
+            position: fixed;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 300px;
+            background: linear-gradient(to bottom, #2EFF4F, #000000);
+            border-radius: 10px;
+            z-index: 998;
+        }
+        #mouse-trail {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, rgba(46,255,79,0.5) 0%, rgba(46,255,79,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.1s ease-out;
+        }
+        .box2 {
+            height: 770px;
+            background-color: #000000;
+            position: relative;
+        }
+        .welcome-text {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 60px;
+            color: white;
+            text-align: right;
+            z-index: 10;
+        }
+        .section-title {
+            font-size: 30px;
+            color: #2EFF4F;
+            margin-bottom: 20px;
+        }
+        .section-description {
+            font-size: 15px;
+            color: #FFFFFF;
+            line-height: 1.5;
+        }
+        .box3 {
+            height: 200px;
+            background-color: #000000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+        .box4 {
+            height: 600px;
+            background-color: #000000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px 0;
+        }
+        .buttons-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            width: 100%;
+        }
+        .images-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            width: 100%;
+            flex: 1;
+            align-self: stretch;
+        }
+        .image-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        .work-image {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .image-wrapper:hover .work-image {
+            transform: scale(1.15);
+        }
+        .view-details-btn {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #2EFF4F;
+            border: 1px solid #2EFF4F;
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: bottom 0.3s ease;
+        }
+        .image-wrapper:hover .view-details-btn {
+            bottom: 20px;
+        }
+        .category-btn {
+            font-size: 15px;
+            color: #FFFFFF;
+            background-color: #3B3838;
+            border: 2px solid #2EFF4F;
+            border-radius: 30px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .category-btn:active {
+            background-color: #2EFF4F;
+        }
+        .box5 {
+            height: 400px;
+            background-color: #000000;
+            position: relative;
+            padding: 40px 20px 0;
+        }
+        .about-title {
+            font-size: 30px;
+            color: #2EFF4F;
+            margin-bottom: 30px;
+        }
+        .info-card {
+            width: 50%;
+            height: 300px;
+            background-color: #3B3838;
+            border-radius: 10px;
+            padding: 20px;
+            position: absolute;
+            left: 20px;
+            top: 100px;
+            overflow: hidden;
+        }
+        .info-item {
+            margin-bottom: 15px;
+        }
+        .info-label {
+            color: #2EFF4F;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        .info-content {
+            color: #FFFFFF;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+        .profile-image {
+            position: absolute;
+            right: 100px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #2EFF4F;
+        }
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .box6 {
+            height: 400px;
+            background-color: #000000;
+            position: relative;
+            padding: 40px 20px 0;
+        }
+        .skills-title {
+            font-size: 30px;
+            color: #2EFF4F;
+            margin-bottom: 40px;
+        }
+        .icon-container {
+            display: flex;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        .icon-row {
+            display: flex;
+            animation-duration: 15s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+        .icon-row:first-child {
+            animation-name: slideLeft;
+        }
+        .icon-row:last-child {
+            animation-name: slideRight;
+        }
+        .skill-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #000000;
+            border: 2px solid #2EFF4F;
+            border-radius: 8px;
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #2EFF4F;
+        }
+        @keyframes slideLeft {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+        @keyframes slideRight {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+        .box7 {
+            height: 300px;
+            background-color: #000000;
+            position: relative;
+            padding: 40px 20px 0;
+        }
+        .contact-title {
+            font-size: 24px;
+            color: #2EFF4F;
+            margin-bottom: 30px;
+        }
+        .contact-item {
+            margin-bottom: 15px;
+        }
+        .contact-label {
+            font-size: 16px;
+            color: #FFFFFF;
+            margin-bottom: 5px;
+        }
+        .contact-content {
+            font-size: 14px;
+            color: #FFFFFF;
+        }
+        .box8 {
+            height: 100px;
+            background-color: #000000;
+        }
+        .box9 {
+            height: 1000px;
+            background-color: #000000;
+            display: none;
+        }
+        .box10 {
+            height: 9000px;
+            background-color: #000000;
+            display: block;
+        }
+        .box11 {
+            height: 10000px;
+            background-color: #000000;
+            display: block;
+        }
+        .box12 {
+            height: 1000px;
+            background-color: #000000;
+            display: none;
+        }
+        .box13 {
+            height: 1000px;
+            background-color: #000000;
+            display: none;
+            overflow-y: auto;
+        }
+        .box14 {
+            height: 1000px;
+            background-color: #000000;
+            display: none;
+            overflow-y: auto;
+        }
+        .box15 {
+            height: 1000px;
+            background-color: #000000;
+            display: none;
+        }
+        .swiper-container {
+            width: 100%;
+            overflow-x: auto;
+            display: flex;
+            gap: 20px;
+            padding: 20px 0;
+            scroll-behavior: smooth;
+        }
+        .swiper-container::-webkit-scrollbar {
+            height: 8px;
+        }
+        .swiper-container::-webkit-scrollbar-track {
+            background: #3B3838;
+            border-radius: 4px;
+        }
+        .swiper-container::-webkit-scrollbar-thumb {
+            background: #2EFF4F;
+            border-radius: 4px;
+        }
+        .swiper-item {
+            flex: 0 0 300px;
+            aspect-ratio: 1;
+            position: relative;
+        }
+        .swiper-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        .swiper-item:hover .swiper-image {
+            transform: scale(1.05);
+        }
+        .swiper-item:hover .view-details-btn {
+            bottom: 20px;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为首页按钮添加点击事件
+            document.getElementById('home-btn').addEventListener('click', function() {
+                document.querySelector('.box2').scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // 为作品按钮添加点击事件
+            document.querySelector('.btn:nth-child(2)').addEventListener('click', function() {
+                document.getElementById('works').scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // 为关于我按钮添加点击事件
+            document.querySelector('.btn:nth-child(3)').addEventListener('click', function() {
+                document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // 为与我联系按钮添加点击事件
+            document.querySelector('.btn:nth-child(4)').addEventListener('click', function() {
+                document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // 为平面设计按钮添加点击事件
+            document.querySelector('.category-btn:nth-child(1)').addEventListener('click', function() {
+                const imagesContainer = document.querySelector('.images-container');
+                imagesContainer.innerHTML = `
+                    <div class="image-wrapper" style="aspect-ratio: 1; margin-bottom: 20px;">
+                        <img src="平面1.jpg" alt="平面设计1" class="work-image">
+                        <button class="view-details-btn" onclick="showBox9('平面1.jpg')">查看详情</button>
+                    </div>
+                    <div class="image-wrapper" style="aspect-ratio: 1; margin-bottom: 20px;">
+                        <img src="平面2.jpg" alt="平面设计2" class="work-image">
+                        <button class="view-details-btn" onclick="showBox9('平面2.jpg')">查看详情</button>
+                    </div>
+                    <div class="image-wrapper" style="aspect-ratio: 1; margin-bottom: 20px;">
+                        <img src="平面3.jpg" alt="平面设计3" class="work-image">
+                        <button class="view-details-btn" onclick="showBox9('平面3.jpg')">查看详情</button>
+                    </div>
+                    <div class="image-wrapper" style="aspect-ratio: 1; margin-bottom: 20px;">
+                        <img src="平面4.jpg" alt="平面设计4" class="work-image">
+                        <button class="view-details-btn" onclick="showBox9('平面4.jpg')">查看详情</button>
+                    </div>
+                `;
+                // 调整图片容器样式，使图片更大
+                imagesContainer.style.gridTemplateColumns = 'repeat(auto-fit, minmax(250px, 1fr))';
+                imagesContainer.style.gap = '10px';
+            });
+            
+            // 为水彩绘制按钮添加点击事件
+            document.querySelector('.category-btn:nth-child(2)').addEventListener('click', function() {
+                const imagesContainer = document.querySelector('.images-container');
+                imagesContainer.innerHTML = `
+                    <div class="swiper-container">
+                        <div class="swiper-item">
+                            <img src="图片1.jpg" alt="水彩绘制1" class="swiper-image">
+                            <button class="view-details-btn" onclick="showBox10('图片1.jpg')">查看详情</button>
+                        </div>
+                        <div class="swiper-item">
+                            <img src="图片2.jpg" alt="水彩绘制2" class="swiper-image">
+                            <button class="view-details-btn" onclick="showBox10('图片2.jpg')">查看详情</button>
+                        </div>
+                        <div class="swiper-item">
+                            <img src="图片3.png" alt="水彩绘制3" class="swiper-image">
+                            <button class="view-details-btn" onclick="showBox10('图片3.png')">查看详情</button>
+                        </div>
+                        <div class="swiper-item">
+                            <img src="图片4.jpg" alt="水彩绘制4" class="swiper-image">
+                            <button class="view-details-btn" onclick="showBox10('图片4.jpg')">查看详情</button>
+                        </div>
+                        <div class="swiper-item">
+                            <img src="图片5.jpg" alt="水彩绘制5" class="swiper-image">
+                            <button class="view-details-btn" onclick="showBox10('图片5.jpg')">查看详情</button>
+                        </div>
+                        <div class="swiper-item">
+                            <img src="图片6.jpg" alt="水彩绘制6" class="swiper-image">
+                            <button class="view-details-btn" onclick="showBox10('图片6.jpg')">查看详情</button>
+                        </div>
+                        <div class="swiper-item">
+                            <img src="图片7.jpg" alt="水彩绘制7" class="swiper-image">
+                            <button class="view-details-btn" onclick="showBox10('图片7.jpg')">查看详情</button>
+                        </div>
+                        <div class="swiper-item">
+                            <img src="图片8.jpg" alt="水彩绘制8" class="swiper-image">
+                            <button class="view-details-btn" onclick="showBox10('图片8.jpg')">查看详情</button>
+                        </div>
+                        <div class="swiper-item">
+                            <img src="图片9.jpg" alt="水彩绘制9" class="swiper-image">
+                            <button class="view-details-btn" onclick="showBox10('图片9.jpg')">查看详情</button>
+                        </div>
+                    </div>
+                `;
+                // 调整图片容器样式
+                imagesContainer.style.display = 'block';
+                imagesContainer.style.gridTemplateColumns = 'none';
+                imagesContainer.style.gap = '0';
+            });
+            
+            // 为摄影摄像按钮添加点击事件
+            document.querySelector('.category-btn:nth-child(3)').addEventListener('click', function() {
+                const imagesContainer = document.querySelector('.images-container');
+                imagesContainer.innerHTML = `
+                    <div class="swiper-container">
+                        <div class="swiper-item">
+                            <img src="摄影1.jpg" alt="摄影摄像1" class="swiper-image">
+                            <button class="view-details-btn" onclick="showBox11('摄影1.jpg')">查看详情</button>
+                        </div>
+                        <div class="swiper-item">
+                            <img src="摄影2.jpg" alt="摄影摄像2" class="swiper-image">
+                            <button class="view-details-btn" onclick="showBox11('摄影2.jpg')">查看详情</button>
+                        </div>
+                        <div class="swiper-item">
+                            <img src="摄影3.jpg" alt="摄影摄像3" class="swiper-image">
+                            <button class="view-details-btn" onclick="showBox11('摄影3.jpg')">查看详情</button>
+                        </div>
+                        <div class="swiper-item">
+                            <img src="摄影4.jpg" alt="摄影摄像4" class="swiper-image">
+                            <button class="view-details-btn" onclick="showBox11('摄影4.jpg')">查看详情</button>
+                        </div>
+                        <div class="swiper-item">
+                            <img src="摄影5.jpg" alt="摄影摄像5" class="swiper-image">
+                            <button class="view-details-btn" onclick="showBox11('摄影5.jpg')">查看详情</button>
+                        </div>
+                        <div class="swiper-item">
+                            <img src="摄影6.jpg" alt="摄影摄像6" class="swiper-image">
+                            <button class="view-details-btn" onclick="showBox11('摄影6.jpg')">查看详情</button>
+                        </div>
+                        <div class="swiper-item">
+                            <img src="摄影7.jpg" alt="摄影摄像7" class="swiper-image">
+                            <button class="view-details-btn" onclick="showBox11('摄影7.jpg')">查看详情</button>
+                        </div>
+                        <div class="swiper-item">
+                            <img src="摄影8.jpg" alt="摄影摄像8" class="swiper-image">
+                            <button class="view-details-btn" onclick="showBox11('摄影8.jpg')">查看详情</button>
+                        </div>
+                        <div class="swiper-item">
+                            <img src="摄影9.jpg" alt="摄影摄像9" class="swiper-image">
+                            <button class="view-details-btn" onclick="showBox11('摄影9.jpg')">查看详情</button>
+                        </div>
+                        <div class="swiper-item">
+                            <img src="摄影10.jpg" alt="摄影摄像10" class="swiper-image">
+                            <button class="view-details-btn" onclick="showBox11('摄影10.jpg')">查看详情</button>
+                        </div>
+                    </div>
+                `;
+                // 调整图片容器样式
+                imagesContainer.style.display = 'block';
+                imagesContainer.style.gridTemplateColumns = 'none';
+                imagesContainer.style.gap = '0';
+            });
+            
+            // 为ip设计按钮添加点击事件
+            document.querySelector('.category-btn:nth-child(4)').addEventListener('click', function() {
+                const imagesContainer = document.querySelector('.images-container');
+                imagesContainer.innerHTML = `
+                    <div class="swiper-container">
+                        <div class="swiper-item">
+                            <img src="微信图片_20250513160334_377.jpg" alt="IP设计1" class="swiper-image">
+                            <button class="view-details-btn" onclick="showBox12('微信图片_20250513160334_377.jpg')">查看详情</button>
+                        </div>
+                        <div class="swiper-item">
+                            <img src="ip2.jpg" alt="IP设计2" class="swiper-image">
+                            <button class="view-details-btn" onclick="showBox15('ip2.jpg')">查看详情</button>
+                        </div>
+                        <div class="swiper-item">
+                            <img src="ip3.jpg" alt="IP设计3" class="swiper-image">
+                            <button class="view-details-btn" onclick="showBox15('ip3.jpg')">查看详情</button>
+                        </div>
+                    </div>
+                `;
+                // 调整图片容器样式
+                imagesContainer.style.display = 'block';
+                imagesContainer.style.gridTemplateColumns = 'none';
+                imagesContainer.style.gap = '0';
+            });
+            
+            // 为产品设计按钮添加点击事件
+            document.querySelector('.category-btn:nth-child(5)').addEventListener('click', function() {
+                const box13 = document.getElementById('box13');
+                box13.style.display = 'block';
+                box13.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // 为3D建模按钮添加点击事件
+            document.querySelector('.category-btn:nth-child(6)').addEventListener('click', function() {
+                const imagesContainer = document.querySelector('.images-container');
+                imagesContainer.innerHTML = `
+                    <div class="swiper-container">
+                        <div class="swiper-item">
+                            <img src="c72c7b2b24e40d6762bc6fdfd6556dd4.jpg" alt="3D建模1" class="swiper-image">
+                            <button class="view-details-btn" onclick="showBox14()">查看详情</button>
+                        </div>
+                        <div class="swiper-item">
+                            <img src="3d2.jpg" alt="3D建模2" class="swiper-image">
+                            <button class="view-details-btn" onclick="showBox14()">查看详情</button>
+                        </div>
+                        <div class="swiper-item">
+                            <img src="3d3.jpg" alt="3D建模3" class="swiper-image">
+                            <button class="view-details-btn" onclick="showBox14()">查看详情</button>
+                        </div>
+                    </div>
+                `;
+                // 调整图片容器样式
+                imagesContainer.style.display = 'block';
+                imagesContainer.style.gridTemplateColumns = 'none';
+                imagesContainer.style.gap = '0';
+            });
+        });
+        
+        // 显示box9并滚动到该位置
+        function showBox9(imageSrc) {
+            const box9 = document.getElementById('box9');
+            const box9Image = document.getElementById('box9-image');
+            box9Image.src = imageSrc;
+            box9.style.display = 'block';
+            box9.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // 滚动到box10
+        function showBox10(imageSrc) {
+            const box10 = document.getElementById('box10');
+            box10.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // 存储每张图片对应的文字说明
+        const photoDescriptions = {
+            '摄影1.jpg': '用纯黑背景做减法，把青提的鲜绿、珠宝的闪、玻璃的透拉到极致。侧光打亮主体，让葡萄的水润感和钻的火彩同时凸显，用玻璃杯做层次，珠宝搭在果串上，把 "水果的鲜活" 和 "珠宝的精致" 揉成一组静物，拍出让人想凑近看的高级感。',
+            '摄影2.jpg': '以黑底衬出番茄的正红与珍珠的莹白，用侧逆光勾勒轮廓，让红果的饱满、珍珠的温润形成强烈撞色。珍珠串从杯口垂落、散落在桌面，制造流动感，把日常小番茄拍出复古贵气感，用简单的构图突出色彩与质感，每一处光影都在放大 "鲜活与精致" 的碰撞。',
+            '摄影3.jpg': '用堆叠构图打造视觉重心，三颗油桃层层递进，蝴蝶兰做视觉延伸，珠宝链点缀细节。纯黑背景隔绝干扰，侧光打亮油桃的果皮光泽与兰花的层次，把水果的鲜活、珠宝的贵气、花艺的柔美融合，用极简背景突出主体，拍出兼具高级感与生命力的静物大片。',
+            '摄影4.jpg': '用创意扭曲手法，把普通苹果切片变成抽象艺术。以黑底为画布，让变形的果片形成错落的视觉矩阵，保留苹果的红与果核细节，用模糊、扭曲的效果打破常规，把日常食材拍出超现实感，用光影强化轮廓，让每一块果片都成为独立的视觉符号。',
+            '摄影5.jpg': '抓准水面涟漪的动态瞬间，用俯拍视角捕捉指尖触水的张力。阳光穿透水面，把波纹的光影、水底的石子都拍得清晰，让静态的手与动态的水形成对比，用自然光影做滤镜，拍出 "指尖生涟漪" 的治愈感，把一个简单的动作拍出故事感与氛围感。',
+            '摄影6.jpg': '用仰拍 + 框式构图，以层层绿叶为画框，框住中间的天空。利用树叶的明暗层次，让前景的绿叶形成天然取景器，把普通的天空拍出 "一眼见天光" 的通透感，用自然的绿意做滤镜，捕捉林间抬头的瞬间，拍出松弛、治愈的森系氛围',
+            '摄影7.jpg': '用对称构图拍阶梯座椅，侧光从窗缝打进来，在空座位上形成明暗层次。以空荡的教室为载体，用光影烘托安静的氛围，捕捉 "下课之后的留白"，把普通的教室拍出故事感，每一束光都在诉说青春的回忆，用极简构图突出空间的静谧与秩序感。',
+            '摄影8.jpg': '用中景构图捕捉中式厅堂的古韵，以木柱为前景，框出后方的雕花桌椅、宫灯与书画。利用室内暖光，让木质家具的温润、宫灯的暖光、书画的雅致融合，拍出江南古宅的烟火气与文化感，用层次丰富的构图，还原中式美学的对称与意境。',
+            '摄影9.jpg': '以雕花木门为前景，框出后方的蓝白彩窗与宫灯，用框式构图突出中式花窗的精致。利用室内外光影差，让彩窗的蓝白在光影中更显通透，把古宅的木作、花窗、宫灯融合，拍出江南园林的雅致与氛围感，每一处细节都在诉说中式美学的浪漫。',
+            '摄影10.jpg': '用对称构图拍螺旋楼梯，以两扇拱窗为背景，让阳光在黑亮地面形成光影倒影。利用空间的纵深感，让螺旋楼梯成为视觉中心，用空荡的房间做留白，拍出极简的建筑美感，把普通的楼梯间拍出高级感，光影与线条的结合，让空间充满故事感。'
+        };
+        
+        // 滚动到box11
+        function showBox11(imageSrc) {
+            const box11 = document.getElementById('box11');
+            box11.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // 显示box12并滚动到该位置
+        function showBox12(imageSrc) {
+            const box12 = document.getElementById('box12');
+            const box12Image = document.getElementById('box12-image');
+            box12Image.src = imageSrc;
+            box12.style.display = 'block';
+            box12.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // 显示box14并滚动到该位置
+        function showBox14() {
+            const box14 = document.getElementById('box14');
+            box14.style.display = 'block';
+            box14.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // 显示box15并滚动到该位置
+        function showBox15(imageSrc) {
+            const box15 = document.getElementById('box15');
+            const box15Image = document.getElementById('box15-image');
+            box15Image.src = imageSrc;
+            box15.style.display = 'block';
+            box15.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // 返回上一级
+        function goBack() {
+            window.location.href = 'xxx.html';
+        }
+        
+        // 实现滑动条的交互功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollbar = document.querySelector('.scrollbar');
+            let isDragging = false;
+            
+            // 鼠标按下事件
+            scrollbar.addEventListener('mousedown', function(e) {
+                isDragging = true;
+                e.preventDefault();
+                updateScroll(e.clientY);
+            });
+            
+            // 鼠标移动事件
+            document.addEventListener('mousemove', function(e) {
+                if (isDragging) {
+                    updateScroll(e.clientY);
+                }
+                
+                // 更新鼠标尾光位置
+                updateMouseTrail(e.clientX, e.clientY);
+            });
+            
+            // 鼠标释放事件
+            document.addEventListener('mouseup', function() {
+                isDragging = false;
+            });
+            
+            // 更新滚动位置
+            function updateScroll(clientY) {
+                const scrollbarRect = scrollbar.getBoundingClientRect();
+                const scrollbarHeight = scrollbarRect.height;
+                const scrollbarTop = scrollbarRect.top;
+                const scrollbarBottom = scrollbarRect.bottom;
+                
+                // 计算鼠标在滑动条中的相对位置 (0-1)
+                let ratio = (clientY - scrollbarTop) / scrollbarHeight;
+                ratio = Math.max(0, Math.min(1, ratio));
+                
+                // 计算页面总高度
+                const documentHeight = document.documentElement.scrollHeight;
+                const windowHeight = window.innerHeight;
+                const scrollableHeight = documentHeight - windowHeight;
+                
+                // 计算目标滚动位置
+                const targetScrollTop = ratio * scrollableHeight;
+                
+                // 执行滚动
+                window.scrollTo({ top: targetScrollTop, behavior: 'smooth' });
+            }
+            
+            // 页面滚动时更新滑动条位置
+            window.addEventListener('scroll', function() {
+                const documentHeight = document.documentElement.scrollHeight;
+                const windowHeight = window.innerHeight;
+                const scrollableHeight = documentHeight - windowHeight;
+                const currentScrollTop = window.pageYOffset;
+                
+                // 计算滚动比例
+                const ratio = currentScrollTop / scrollableHeight;
+                
+                // 更新滑动条的背景渐变位置（可选）
+                // 这里可以添加代码来更新滑动条的视觉效果
+            });
+            
+            // 鼠标尾光效果
+            const mouseTrail = document.getElementById('mouse-trail');
+            function updateMouseTrail(x, y) {
+                mouseTrail.style.left = (x - 10) + 'px';
+                mouseTrail.style.top = (y - 10) + 'px';
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="box box1">
+        <button class="btn" id="home-btn">首页</button>
+        <button class="btn">作品</button>
+        <button class="btn">关于我</button>
+        <button class="btn">与我联系</button>
+    </div>
+    <button class="back-btn" onclick="goBack()">←</button>
+    <div class="scrollbar"></div>
+    <div id="mouse-trail"></div>
+    <div class="box box2">
+        <div class="welcome-text">
+            WELCOME TO<br>
+            LOUMENGXIN'S<br>
+            WONDERLAND
+        </div>
+        <video autoplay muted loop style="width: 100%; height: 100%; object-fit: cover;">
+            <source src="首页视频.mp4" type="video/mp4">
+            您的浏览器不支持视频播放。
+        </video>
+    </div>
+    <div class="box box3" id="works">
+        <div class="section-title">精选作品</div>
+        <div class="section-description">探索我的最新设计作品，每一件都融合了创意与视觉，带来独特设计体验</div>
+    </div>
+    <div class="box box4">
+        <div class="buttons-container">
+            <button class="category-btn">平面设计</button>
+            <button class="category-btn">水彩绘制</button>
+            <button class="category-btn">摄影摄像</button>
+            <button class="category-btn">ip设计</button>
+            <button class="category-btn">产品设计</button>
+            <button class="category-btn">3D建模</button>
+        </div>
+        <div class="images-container">
+            <div class="image-wrapper">
+                <img src="平面1.jpg" alt="作品1" class="work-image">
+                <button class="view-details-btn">查看详情</button>
+            </div>
+            <div class="image-wrapper">
+                <img src="图片3.png" alt="作品2" class="work-image">
+                <button class="view-details-btn">查看详情</button>
+            </div>
+            <div class="image-wrapper">
+                <img src="摄影1.jpg" alt="作品3" class="work-image">
+                <button class="view-details-btn">查看详情</button>
+            </div>
+            <div class="image-wrapper">
+                <img src="微信图片_20250513160334_377.jpg" alt="作品4" class="work-image">
+                <button class="view-details-btn">查看详情</button>
+            </div>
+            <div class="image-wrapper">
+                <img src="e694752e648f3d0686292a7443b06a89.jpg" alt="作品5" class="work-image">
+                <button class="view-details-btn">查看详情</button>
+            </div>
+            <div class="image-wrapper">
+                <img src="c72c7b2b24e40d6762bc6fdfd6556dd4.jpg" alt="作品6" class="work-image">
+                <button class="view-details-btn">查看详情</button>
+            </div>
+        </div>
+    </div>
+    <div class="box box5" id="about">
+        <div class="about-title">关于我</div>
+        <div class="info-card">
+            <div class="info-item">
+                <div class="info-label">个人信息</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">姓名</div>
+                <div class="info-content">娄梦馨</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">专业背景</div>
+                <div class="info-content">北京工商大学，数字媒体艺术专业，擅长动画设计，水彩绘制</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">设计理念</div>
+                <div class="info-content">用设计连接生活，用质感诠释态度</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">个人特征</div>
+                <div class="info-content">ISTJ人格，低调靠谱、守序严谨、说到做到、稳如老狗的现实担当</div>
+            </div>
+        </div>
+        <div class="profile-image">
+            <img src="微信图片_20260305152608_116_5.jpg" alt="个人照片">
+        </div>
+    </div>
+    <div class="box box6">
+        <div class="skills-title">技能点</div>
+        <div class="icon-container">
+            <div class="icon-row">
+                <div class="skill-icon">🎨</div>
+                <div class="skill-icon">📱</div>
+                <div class="skill-icon">🎬</div>
+                <div class="skill-icon">✏️</div>
+                <div class="skill-icon">💻</div>
+                <div class="skill-icon">🎵</div>
+                <div class="skill-icon">📷</div>
+                <div class="skill-icon">🎯</div>
+            </div>
+        </div>
+        <div class="icon-container">
+            <div class="icon-row">
+                <div class="skill-icon">🌟</div>
+                <div class="skill-icon">⚡</div>
+                <div class="skill-icon">🔧</div>
+                <div class="skill-icon">🎭</div>
+                <div class="skill-icon">📝</div>
+                <div class="skill-icon">🎪</div>
+                <div class="skill-icon">🌊</div>
+                <div class="skill-icon">🔥</div>
+            </div>
+        </div>
+    </div>
+    <div class="box box7" id="contact">
+        <div class="contact-title">与我联系</div>
+        <div class="contact-item">
+            <div class="contact-label">邮箱</div>
+            <div class="contact-content">1015632313@qq.com</div>
+        </div>
+        <div class="contact-item">
+            <div class="contact-label">电话</div>
+            <div class="contact-content">12345678900</div>
+        </div>
+        <div class="contact-item">
+            <div class="contact-label">工作室</div>
+            <div class="contact-content">北京工商大学良乡校区</div>
+        </div>
+    </div>
+    <div class="box box8"></div>
+    <div class="box box9" id="box9">
+        <h2 style="color: #2EFF4F; font-size: 30px; text-align: center; margin-top: 40px;">平面设计详情</h2>
+        <div style="display: flex; flex-direction: column; align-items: center; margin-top: 40px; padding: 0 20px;">
+            <img id="box9-image" src="平面1.jpg" alt="平面设计1" style="max-width: 56%; max-height: 420px; object-fit: contain;">
+            <div style="color: #2EFF4F; font-size: 16px; line-height: 1.5; margin-top: 30px; max-width: 80%; text-align: center;">
+                <p>你这几年经历的所有的一切，你不可以再忘记</p>
+                <p style="margin: 15px 0;">"天授之后，脑子里会多一个目的，对么，被天授的人会去做一件事情。这件事情完成了，所有的记忆都会消失。你就从零开始了，无论你经历了多少动人的故事，有多少瑰丽的经历，都像废稿一样直接被抹掉了。"</p>
+                <p>用了黑红配色尝试了一下故障艺术！</p>
+            </div>
+        </div>
+    </div>
+    <div class="box box10" id="box10">
+        <h2 style="color: #2EFF4F; font-size: 30px; text-align: center; margin-top: 40px;">水彩绘制详情</h2>
+        <div style="display: flex; flex-direction: column; align-items: center; margin-top: 40px; padding: 0 20px; gap: 40px;">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; max-width: 80%;">
+                <img src="图片1.jpg" alt="水彩绘制1" style="max-width: 56%; max-height: 420px; object-fit: contain;">
+                <div style="color: #2EFF4F; font-size: 16px; line-height: 1.5; text-align: center;">
+                    <p>以 <strong>「童年视角的奇幻狂欢」</strong> 为核心，用童趣化的符号重构万圣节的神秘氛围，打造治愈系的魔法夜世界。<br>色彩逻辑：以纯黑为底，极致衬托高饱和的紫、橙、粉、蓝，用 "暗夜星光" 的色彩逻辑，让每一个元素都像发光的童话符号，弱化万圣节的恐怖感，强化梦幻感。</p>
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; max-width: 80%;">
+                <img src="图片2.jpg" alt="水彩绘制2" style="max-width: 56%; max-height: 420px; object-fit: contain;">
+                <div style="color: #2EFF4F; font-size: 16px; line-height: 1.5; text-align: center;">
+                    <p>以 <strong>「现实与梦境的边界漫游」</strong> 为核心，用超现实的意象构建 "身体与宇宙共生" 的奇幻叙事，探索潜意识的精神世界。</p>
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; max-width: 80%;">
+                <img src="图片3.png" alt="水彩绘制3" style="max-width: 56%; max-height: 420px; object-fit: contain;">
+                <div style="color: #2EFF4F; font-size: 16px; line-height: 1.5; text-align: center;">
+                    <p>巨型蝴蝶结：既是少女的 "精神冠冕"，也象征童年的纯真与被包裹的安全感，彩色轮盘中心注入多元、鲜活的生命力；<br>无脸少女 + 黑色放射状造型：弱化具体身份，强化 "女性本体" 的抽象表达，黑色造型既像守护的羽翼，也象征自我的边界；<br>环绕的花草：构建自然疗愈的场域，将少女置于 "被滋养、被包裹" 的状态，表达女性在自然中与自我和解的精神状态。</p>
+                </div>
+            </div>
+            <div style="display: flex; justify-content: center; gap: 30px; max-width: 90%;">
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; flex: 1;">
+                    <img src="图片4.jpg" alt="水彩绘制4" style="max-width: 100%; max-height: 300px; object-fit: contain;">
+                    <div style="color: #2EFF4F; font-size: 16px; line-height: 1.5; text-align: center;">
+                        <p></p>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; flex: 1;">
+                    <img src="图片5.jpg" alt="水彩绘制5" style="max-width: 100%; max-height: 300px; object-fit: contain;">
+                    <div style="color: #2EFF4F; font-size: 16px; line-height: 1.5; text-align: center;">
+                        <p></p>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; flex: 1;">
+                    <img src="图片6.jpg" alt="水彩绘制6" style="max-width: 100%; max-height: 300px; object-fit: contain;">
+                    <div style="color: #2EFF4F; font-size: 16px; line-height: 1.5; text-align: center;">
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; max-width: 80%;">
+                <img src="图片7.jpg" alt="水彩绘制7" style="max-width: 56%; max-height: 420px; object-fit: contain;">
+                <div style="color: #2EFF4F; font-size: 16px; line-height: 1.5; text-align: center;">
+                    <p>采用波点人像风格，同时学习了草间弥生的波点元素风格</p>
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; max-width: 80%;">
+                <img src="图片8.jpg" alt="水彩绘制8" style="max-width: 56%; max-height: 420px; object-fit: contain;">
+                <div style="color: #2EFF4F; font-size: 16px; line-height: 1.5; text-align: center;">
+                    <p></p>
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; max-width: 80%;">
+                <img src="图片9.jpg" alt="水彩绘制9" style="max-width: 56%; max-height: 420px; object-fit: contain;">
+                <div style="color: #2EFF4F; font-size: 16px; line-height: 1.5; text-align: center;">
+                    <p>你静静看，这世界上的人和事，总会展现出它们的原来面目和真相</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box box11" id="box11">
+        <h2 style="color: #2EFF4F; font-size: 30px; text-align: center; margin-top: 40px;">摄影摄像详情</h2>
+        <div style="display: flex; flex-direction: column; align-items: center; margin-top: 40px; padding: 0 20px; gap: 40px;">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; max-width: 80%;">
+                <img src="摄影1.jpg" alt="摄影摄像1" style="max-width: 56%; max-height: 490px; object-fit: contain;">
+                <div style="color: #2EFF4F; font-size: 16px; line-height: 1.5; text-align: center;">
+                    <p>用纯黑背景做减法，把青提的鲜绿、珠宝的闪、玻璃的透拉到极致。侧光打亮主体，让葡萄的水润感和钻的火彩同时凸显，用玻璃杯做层次，珠宝搭在果串上，把 "水果的鲜活" 和 "珠宝的精致" 揉成一组静物，拍出让人想凑近看的高级感。</p>
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; max-width: 80%;">
+                <img src="摄影2.jpg" alt="摄影摄像2" style="max-width: 56%; max-height: 490px; object-fit: contain;">
+                <div style="color: #2EFF4F; font-size: 16px; line-height: 1.5; text-align: center;">
+                    <p>以黑底衬出番茄的正红与珍珠的莹白，用侧逆光勾勒轮廓，让红果的饱满、珍珠的温润形成强烈撞色。珍珠串从杯口垂落、散落在桌面，制造流动感，把日常小番茄拍出复古贵气感，用简单的构图突出色彩与质感，每一处光影都在放大 "鲜活与精致" 的碰撞。</p>
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; max-width: 80%;">
+                <img src="摄影3.jpg" alt="摄影摄像3" style="max-width: 56%; max-height: 490px; object-fit: contain;">
+                <div style="color: #2EFF4F; font-size: 16px; line-height: 1.5; text-align: center;">
+                    <p>用堆叠构图打造视觉重心，三颗油桃层层递进，蝴蝶兰做视觉延伸，珠宝链点缀细节。纯黑背景隔绝干扰，侧光打亮油桃的果皮光泽与兰花的层次，把水果的鲜活、珠宝的贵气、花艺的柔美融合，用极简背景突出主体，拍出兼具高级感与生命力的静物大片。</p>
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; max-width: 80%;">
+                <img src="摄影4.jpg" alt="摄影摄像4" style="max-width: 56%; max-height: 490px; object-fit: contain;">
+                <div style="color: #2EFF4F; font-size: 16px; line-height: 1.5; text-align: center;">
+                    <p>用创意扭曲手法，把普通苹果切片变成抽象艺术。以黑底为画布，让变形的果片形成错落的视觉矩阵，保留苹果的红与果核细节，用模糊、扭曲的效果打破常规，把日常食材拍出超现实感，用光影强化轮廓，让每一块果片都成为独立的视觉符号。</p>
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; max-width: 80%;">
+                <img src="摄影5.jpg" alt="摄影摄像5" style="max-width: 56%; max-height: 490px; object-fit: contain;">
+                <div style="color: #2EFF4F; font-size: 16px; line-height: 1.5; text-align: center;">
+                    <p>抓准水面涟漪的动态瞬间，用俯拍视角捕捉指尖触水的张力。阳光穿透水面，把波纹的光影、水底的石子都拍得清晰，让静态的手与动态的水形成对比，用自然光影做滤镜，拍出 "指尖生涟漪" 的治愈感，把一个简单的动作拍出故事感与氛围感。</p>
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; max-width: 80%;">
+                <img src="摄影6.jpg" alt="摄影摄像6" style="max-width: 56%; max-height: 490px; object-fit: contain;">
+                <div style="color: #2EFF4F; font-size: 16px; line-height: 1.5; text-align: center;">
+                    <p>用仰拍 + 框式构图，以层层绿叶为画框，框住中间的天空。利用树叶的明暗层次，让前景的绿叶形成天然取景器，把普通的天空拍出 "一眼见天光" 的通透感，用自然的绿意做滤镜，捕捉林间抬头的瞬间，拍出松弛、治愈的森系氛围</p>
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; max-width: 80%;">
+                <img src="摄影7.jpg" alt="摄影摄像7" style="max-width: 56%; max-height: 490px; object-fit: contain;">
+                <div style="color: #2EFF4F; font-size: 16px; line-height: 1.5; text-align: center;">
+                    <p>用对称构图拍阶梯座椅，侧光从窗缝打进来，在空座位上形成明暗层次。以空荡的教室为载体，用光影烘托安静的氛围，捕捉 "下课之后的留白"，把普通的教室拍出故事感，每一束光都在诉说青春的回忆，用极简构图突出空间的静谧与秩序感。</p>
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; max-width: 80%;">
+                <img src="摄影8.jpg" alt="摄影摄像8" style="max-width: 56%; max-height: 490px; object-fit: contain;">
+                <div style="color: #2EFF4F; font-size: 16px; line-height: 1.5; text-align: center;">
+                    <p>用中景构图捕捉中式厅堂的古韵，以木柱为前景，框出后方的雕花桌椅、宫灯与书画。利用室内暖光，让木质家具的温润、宫灯的暖光、书画的雅致融合，拍出江南古宅的烟火气与文化感，用层次丰富的构图，还原中式美学的对称与意境。</p>
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; max-width: 80%;">
+                <img src="摄影9.jpg" alt="摄影摄像9" style="max-width: 56%; max-height: 490px; object-fit: contain;">
+                <div style="color: #2EFF4F; font-size: 16px; line-height: 1.5; text-align: center;">
+                    <p>以雕花木门为前景，框出后方的蓝白彩窗与宫灯，用框式构图突出中式花窗的精致。利用室内外光影差，让彩窗的蓝白在光影中更显通透，把古宅的木作、花窗、宫灯融合，拍出江南园林的雅致与氛围感，每一处细节都在诉说中式美学的浪漫。</p>
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; max-width: 80%;">
+                <img src="摄影10.jpg" alt="摄影摄像10" style="max-width: 56%; max-height: 490px; object-fit: contain;">
+                <div style="color: #2EFF4F; font-size: 16px; line-height: 1.5; text-align: center;">
+                    <p>用对称构图拍螺旋楼梯，以两扇拱窗为背景，让阳光在黑亮地面形成光影倒影。利用空间的纵深感，让螺旋楼梯成为视觉中心，用空荡的房间做留白，拍出极简的建筑美感，把普通的楼梯间拍出高级感，光影与线条的结合，让空间充满故事感。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box box12" id="box12">
+        <h2 style="color: #2EFF4F; font-size: 30px; text-align: center; margin-top: 40px;">IP设计详情</h2>
+        <div style="display: flex; flex-direction: column; align-items: center; margin-top: 40px; padding: 0 20px;">
+            <img id="box12-image" src="微信图片_20250513160334_377.jpg" alt="IP设计1" style="max-width: 40%; max-height: 300px; object-fit: contain;">
+            <div style="color: #2EFF4F; font-size: 16px; line-height: 1.5; margin-top: 30px; max-width: 80%; text-align: center;">
+                <p>本系列文创产品以赣县的代表性建筑为灵感,融合中国古代水墨画的美学风格,旨在传承与弘扬客家文化。设计中巧妙运用水墨的流动性和层次感,将建筑的轮廓与客家文化的精髓相结合,创造出既具有现代审美又不失传统韵味的文创产品。每件作品都是对赣县区深厚文化底蕴的致敬,同时也是对客家文化传承的一次创新尝试,旨在通过文化赋能,推动赣县区文旅产业的高质量发展。</p>
+            </div>
+        </div>
+    </div>
+    <div class="box box13" id="box13">
+        <h2 style="color: #2EFF4F; font-size: 30px; text-align: center; margin-top: 40px;">产品设计</h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; margin-top: 40px; padding: 0 20px;">
+            <img src="e694752e648f3d0686292a7443b06a89.jpg" alt="产品设计1" style="max-width: 40%; height: auto;">
+            <img src="微信图片_20260409190508_81_2.jpg" alt="产品设计2" style="max-width: 40%; height: auto;">
+            <img src="微信图片_20260409190509_82_2.jpg" alt="产品设计3" style="max-width: 40%; height: auto;">
+            <img src="微信图片_20260409190510_83_2.jpg" alt="产品设计4" style="max-width: 40%; height: auto;">
+            <img src="微信图片_20260409190510_84_2.jpg" alt="产品设计5" style="max-width: 40%; height: auto;">
+            <div style="color: #2EFF4F; font-size: 16px; line-height: 1.5; margin-top: 30px; max-width: 80%;">
+                <p style="font-weight: bold; margin-bottom: 15px;">甜甜圈形可食用环保蔬菜沙拉包装设计理念</p>
+                <p style="margin-bottom: 15px;">本设计以"自然共生，趣味食愈"为核心，将甜甜圈的趣味形态与蔬菜沙拉的健康属性结合，同时践行全链路环保的设计思考</p>
+                <p style="margin-bottom: 15px;">外观上，甜甜圈的环形造型打破传统沙拉包装的方正刻板，圆润曲线自带亲和力，既契合甜品化的轻食消费趋势，又通过中空结构实现食材分层收纳，让蔬果的色彩与纹理成为包装的视觉亮点。包装材质选用可食用糯米纸与植物淀粉复合基底，外层可直接咀嚼食用，内层防水覆膜也提取自海藻提取物，从根源杜绝塑料废弃物，实现"包装即食材"的零废弃理念。</p>
+                <p>此外，悬挂式的展示形式借鉴礼品包装的仪式感，弱化食品包装的功能性冰冷感，让沙拉从餐桌食材变兼具观赏性的生活小物。设计希望通过趣味形态与环保材质的融合，让消费者在享受轻食的同时，感知可持续设计的温度，推动环保理念在日常饮食场景中的自然渗透。</p>
+            </div>
+        </div>
+    </div>
+    <div class="box box14" id="box14">
+        <h2 style="color: #2EFF4F; font-size: 30px; text-align: center; margin-top: 40px;">3D建模详情</h2>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 30px; margin-top: 40px; padding: 0 20px;">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 15px; max-width: 40%;">
+                <img src="c72c7b2b24e40d6762bc6fdfd6556dd4.jpg" alt="3D建模1" style="max-width: 100%; height: auto;">
+                <p style="color: #2EFF4F; font-size: 16px; line-height: 1.5; text-align: center;">建模出了彩铅小画的质感和曼塔玫瑰色珍珠，同时用了静谧的颜色烘托氛围</p>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 15px; max-width: 40%;">
+                <img src="3d2.jpg" alt="3D建模2" style="max-width: 100%; height: auto;">
+                <p style="color: #2EFF4F; font-size: 16px; line-height: 1.5; text-align: center;">团善<br>从非遗宫廷团扇里提取了一些灵感，过去隐晦地羞涩地一切，如今可以大方可以大胆可以发光。</p>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 15px; max-width: 40%;">
+                <img src="3d3.jpg" alt="3D建模3" style="max-width: 100%; height: auto;">
+                <p style="color: #2EFF4F; font-size: 16px; line-height: 1.5; text-align: center;">骏纹<br>今天的灵感来源于中国非遗中的铁画，迎着春让我想结合马进行一次创作，因此想到成语"金戈铁马"。但其实这次的创作没想象中顺利，我不想画面中出现太具象的马，因此换着法子想了很多具有🐎影子的元素，最后用手写的毛笔和ai生成的像花朵的马作为了主体，希望大家新的一年豪迈、刚毅地继续大步向前。</p>
+            </div>
+        </div>
+    </div>
+    <div class="box box15" id="box15">
+        <h2 style="color: #2EFF4F; font-size: 30px; text-align: center; margin-top: 40px;">IP设计详情</h2>
+        <div style="display: flex; flex-direction: column; align-items: center; margin-top: 40px; padding: 0 20px;">
+            <img id="box15-image" src="ip2.jpg" alt="IP设计2" style="max-width: 40%; max-height: 300px; object-fit: contain;">
+            <div style="color: #2EFF4F; font-size: 16px; line-height: 1.5; margin-top: 30px; max-width: 80%; text-align: center;">
+                <p>本系列文创产品以赣县的代表性建筑为灵感,融合中国古代水墨画的美学风格,旨在传承与弘扬客家文化。设计中巧妙运用水墨的流动性和层次感,将建筑的轮廓与客家文化的精髓相结合,创造出既具有现代审美又不失传统韵味的文创产品。每件作品都是对赣县区深厚文化底蕴的致敬,同时也是对客家文化传承的一次创新尝试,旨在通过文化赋能,推动赣县区文旅产业的高质量发展。</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
